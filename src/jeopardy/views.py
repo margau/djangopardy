@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import Cardset, GameRound, Player, AnswerQuestion
+from .models import Cardset, GameRound, Player, AnswerQuestion, AnswerQuestionAsked
 
 # Create your views here.
 
@@ -74,7 +74,23 @@ def play(request, id):
                     aq_obj["player_correct"] = asked.player_correct
             caq.append(aq_obj)
         aq.append(caq)
-            
+
+    # define next player
+    # get latest updated AQasked for this round
+    latest_asked = AnswerQuestionAsked.objects.filter(gameround=gameround).order_by('-time_updated').first()
+    next_player = None
+    next_player_random = True
+    if latest_asked:
+        if latest_asked.player_correct:
+            # get next player
+            next_player = latest_asked.player_correct
+            # check if this player is already asked
+            next_player_random = False
+    
+    if next_player_random:
+        # get random player
+        next_player = gameround.player_set.order_by('?').first()
+
     template = loader.get_template('play.html')
     context = {
         'gameround': gameround,
@@ -82,6 +98,8 @@ def play(request, id):
         'categories': categories,
         'points': points,
         'aq': aq,
+        'next_player': next_player,
+        'next_player_random': next_player_random,
     }
     return HttpResponse(template.render(context, request))
 

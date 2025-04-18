@@ -6,12 +6,18 @@
 <div class="row">
   {% for x in players %}
   <div class="col">
-    <b>{{ x.name }}: </b>{{x.points}}
+    <h3>{{ x.name }}: </h3>{{x.points}}
   </div>
   {% endfor %}
   <div class="col">
-    <p><b>Nächster Spieler </b>TODO</p>
-    TODO: Grund Zufall oder richtig
+    <h3><b>Nächster Spieler: </b>{{next_player}}</h3>
+    <p>
+      {% if next_player_random %}
+      Zufällig gewählt, keine vorherige korrekte Antwort
+      {% else %}
+      Spieler hat die letzte Frage richtig beantwortet
+      {% endif %}
+    </p>
   </div>
 </div>
 <div class="row">
