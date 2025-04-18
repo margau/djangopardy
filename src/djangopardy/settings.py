@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-d(w7barn=3bwq(_wa4cw6$=10&&tq-6ul@=ss(1g3%)swi-dto
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["djangopardy.margau.net"]
+ALLOWED_HOSTS = ["djangopardy.margau.net", "127.0.0.1"]
 
 
 CSRF_TRUSTED_ORIGINS = ["https://djangopardy.margau.net"]

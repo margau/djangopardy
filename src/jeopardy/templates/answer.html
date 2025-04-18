@@ -9,7 +9,10 @@
     <h1>{{ answer.answer_text }}</h1>
     {% if answer.answer_media_type == "I" %}
     <img src="{{ answer.answer_media.url }}" width="70%" class="img-fluid">
-    {% elif answer.answer_media_type == "V" %}
+    {% elif answer.answer_media_type == "A" %}
+    <audio controls autoplay>
+      <source src="{{ answer.answer_media.url }}">
+    </audio>
     {% endif %}
     
   </div>
