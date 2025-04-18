@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "djangopardy"
+description = 'Prometheus Textfile Tooling'
+readme = "README.md"
+requires-python = ">=3.7"
+license = "GPL-3.0"
+keywords = [
+]
+authors = [
+  { name = "margau", email = "dev@vanessagaube.de" }
+]
+classifiers = []
+dependencies = [
+  "Django",
+  "django-bootstrap-v5"
+]
+dynamic = ["version"]
+
+[project.urls]
+Issues = "https://github.com/margau/promtext-cli/issues"
+Source = "https://github.com/margau/promtext-cli"
+
+[project.scripts]
+webserver = "python src/manage.py runserver"
+
+[tool.hatch.version]
+source = "vcs"

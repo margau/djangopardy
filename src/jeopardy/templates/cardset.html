@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block site-title %}Cardset "{{ cardset.name }}"{% endblock %}
+
+{% block content %}
+<h2>Rounds</h2>
+  <ul class="list-group">
+    {% for x in gamerounds %}
+      <li class="list-group-item"><a href="/gameround/{{ x.id }}"><button type="button" class="btn btn-primary">{{x.name}}</button></a> (Started {{x.start_time}})</li>
+    {% endfor %}
+  </ul>
+  <form method="post" class="row justify-content-center">
+
+    {% csrf_token %}
+      <div class="col-auto">
+        <label for="inputName" class="">Name der neuen Runde</label>
+        <input type="text" class="form-control" id="inputName" name="name" placeholder="">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Erstellen</button>
+      </div>
+
+</form>
+{% endblock %}

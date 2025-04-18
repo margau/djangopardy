@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    {% for x in cardsets %}
+      <li><a href="cardset/{{ x.id }}"><button type="button" class="btn btn-primary">{{x.name}}</button></a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
