@@ -64,7 +64,15 @@ def play(request, id):
         caq = []
         for p in points:   
             # get all answer questions for this category 
-            caq.append(AnswerQuestion.objects.get_best_aq(c['id'],p['id']))
+            aq_tmp = AnswerQuestion.objects.get_best_aq(c['id'],p['id'])
+            aq_obj = {"aq": aq_tmp, "asked": False, "player_correct":None}
+            # check if this question was already asked in this round
+            if aq_tmp:
+                asked = aq_obj["aq"].answerquestionasked_set.filter(gameround=gameround).first()
+                if asked:
+                    aq_obj["asked"] = True
+                    aq_obj["player_correct"] = asked.player_correct
+            caq.append(aq_obj)
         aq.append(caq)
             
     template = loader.get_template('play.html')
