@@ -18,13 +18,12 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc pipx git
 
-RUN pipx install hatch
-
    # Copy the rest of application code to container
 COPY . .
 
 # create default environment
-RUN pipx run hatch env create default
+RUN pipx run hatch dep show requirements > requirements.txt
+RUN pip install -r requirements.txt
 
 # Document that the container listens on port 8000
 EXPOSE 8000
@@ -34,5 +33,5 @@ RUN chmod +x  /app/entrypoint.sh
 
 # Set the entrypoint script as the default command
 # This will run migrations, collect static files, and start Gunicorn
-CMD pipx run hatch run ./entrypoint.sh
+CMD ["/app/entrypoint.sh"]
 
