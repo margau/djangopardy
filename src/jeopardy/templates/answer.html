@@ -16,14 +16,15 @@
 </div>
 <div class="row mt-5">
 <div class="col d-grid gap-2">
-  <a href="/play/{{ gameround.id }}/answeraction/none/{{asked.id}}" class="btn btn-primary" role="button">Publikum</a>
+  <a href="/play/{{ gameround.id }}/answeraction/none/{{answer.id}}" class="btn btn-primary" role="button">Publikum</a>
 </div>
 {% for p in players %}
 <div class="col d-grid gap-2">
   <h3>{{p.name}}</h3>
-  <a href="/play/{{ gameround.id }}/answeraction/correct/{{asked.id}}?player={{p.id}}" class="btn btn-primary" role="button">Richtig</a>
-  <a href="/play/{{ gameround.id }}/answeraction/wrong/{{asked.id}}?player={{p.id}}" class="btn btn-primary" role="button">Falsch</a>
+  <a href="/play/{{ gameround.id }}/answeraction/correct/{{answer.id}}?player={{p.id}}" class="btn btn-primary" role="button">Richtig</a>
+  <a href="/play/{{ gameround.id }}/answeraction/wrong/{{answer.id}}?player={{p.id}}" class="btn btn-primary" role="button">Falsch</a>
 </div>
 {% endfor %}
+{{ asked.id }}
 </div>
 {% endblock %}

@@ -82,7 +82,7 @@ def answer(request, gameround_id, answer_id):
     answer = AnswerQuestion.objects.get(id=answer_id)
     players = gameround.player_set.all().values()
     # note that we have asked this question
-    asked = answer.answerquestionasked_set.create(gameround=gameround)
+    asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
 
     template = loader.get_template('answer.html')
     context = {
@@ -90,5 +90,31 @@ def answer(request, gameround_id, answer_id):
         'answer': answer,
         'players': players,
         'asked': asked,
+    }
+    return HttpResponse(template.render(context, request))
+
+def question(request, gameround_id, answer_id, action = "none"):
+    gameround = GameRound.objects.get(id=gameround_id)
+    answer = AnswerQuestion.objects.get(id=answer_id)
+    players = gameround.player_set.all().values()
+    # note that we have asked this question
+    asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
+    player_correct = None
+    # wenn es richtig war, punkte draufrechnen
+    if action == "correct":
+        pid = request.GET.get('player', None)
+        player_correct = Player.objects.get(id=pid)
+        asked.player_correct = player_correct
+    if action == "none":
+        asked.player_correct = None
+
+    asked.save()
+    template = loader.get_template('question.html')
+    context = {
+        'gameround': gameround,
+        'answer': answer,
+        'players': players,
+        'asked': asked,
+        'player_correct': player_correct,
     }
     return HttpResponse(template.render(context, request))
