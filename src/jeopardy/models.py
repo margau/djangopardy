@@ -83,7 +83,10 @@ class AnswerQuestionAsked(models.Model):
     time_asked = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
     gameround = models.ForeignKey(GameRound, on_delete=models.CASCADE)
-    player_correct = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='right_answer')
-    player_wrong = models.ManyToManyField(Player, related_name='wrong_answers')
+    player_correct = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='right_answer', blank=True)
+    player_wrong = models.ManyToManyField(Player, related_name='wrong_answers', blank=True)
+
+    def __str__(self):
+        return str(self.answer_question) + " - " + str(self.time_asked) + " - " + str(self.gameround)
 
 

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block site-title %}Spiel "{{ gameround.name }}"{% endblock %}
+
+{% block content %}
+<h4><b>{{answer.category}}</b> für <b>{{answer.points}}</b></h4>
+<div class="row">
+  <div class="col">
+    <h4>Wie lautet die Frage zur folgenden Antwort:</h4>
+    <h1>{{ answer.answer_text }}</h1>
+  </div>
+</div>
+<div class="row mt-5">
+<div class="col d-grid gap-2">
+  <a href="/play/{{ gameround.id }}/answeraction/none/{{asked.id}}" class="btn btn-primary" role="button">Unbeantwortet</a>
+</div>
+{% for p in players %}
+<div class="col d-grid gap-2">
+  <h3>{{p.name}}</h3>
+  <a href="/play/{{ gameround.id }}/answeraction/correct/{{asked.id}}?player={{p.id}}" class="btn btn-primary" role="button">Richtig</a>
+  <a href="/play/{{ gameround.id }}/answeraction/wrong/{{asked.id}}?player={{p.id}}" class="btn btn-primary" role="button">Falsch</a>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

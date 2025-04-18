@@ -24,7 +24,7 @@
   <div class="col d-grid gap-2">
     {% for y in x %}
     {% if y %}
-    <a href="/play/{{ gameround.id }}/question/{{y.id}}" class="btn btn-primary" role="button">{{y.points}}</a>
+    <a href="/play/{{ gameround.id }}/answer/{{y.id}}" class="btn btn-primary" role="button">{{y.points}}</a>
     {% else %}
     <button type="button" class="btn btn-lg btn-primary" disabled>Leider sind uns die Antworten ausgegangen!</button>
     {% endif %}

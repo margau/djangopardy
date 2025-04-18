@@ -76,3 +76,19 @@ def play(request, id):
         'aq': aq,
     }
     return HttpResponse(template.render(context, request))
+
+def answer(request, gameround_id, answer_id):
+    gameround = GameRound.objects.get(id=gameround_id)
+    answer = AnswerQuestion.objects.get(id=answer_id)
+    players = gameround.player_set.all().values()
+    # note that we have asked this question
+    asked = answer.answerquestionasked_set.create(gameround=gameround)
+
+    template = loader.get_template('answer.html')
+    context = {
+        'gameround': gameround,
+        'answer': answer,
+        'players': players,
+        'asked': asked,
+    }
+    return HttpResponse(template.render(context, request))
