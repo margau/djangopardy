@@ -7,11 +7,16 @@
   <div class="col">
     <h4>Wie lautet die Frage zur folgenden Antwort:</h4>
     <h1>{{ answer.answer_text }}</h1>
+    {% if answer.answer_media_type == "I" %}
+    <img src="{{ answer.answer_media.url }}" width="70%" class="img-fluid">
+    {% elif answer.answer_media_type == "V" %}
+    {% endif %}
+    
   </div>
 </div>
 <div class="row mt-5">
 <div class="col d-grid gap-2">
-  <a href="/play/{{ gameround.id }}/answeraction/none/{{asked.id}}" class="btn btn-primary" role="button">Unbeantwortet</a>
+  <a href="/play/{{ gameround.id }}/answeraction/none/{{asked.id}}" class="btn btn-primary" role="button">Publikum</a>
 </div>
 {% for p in players %}
 <div class="col d-grid gap-2">

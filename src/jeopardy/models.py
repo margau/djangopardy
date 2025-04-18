@@ -47,10 +47,27 @@ class AnswerQuestionManager(models.Manager):
         return ret
 
 class AnswerQuestion(models.Model):
+    MEDIA_NONE = 'N'
+    MEDIA_IMAGE = 'I'
+    MEDIA_AUDIO = 'A'
+    MEDIA_VIDEO = 'V'
+
+    MEDIA_CHOICES = [
+        (MEDIA_NONE, 'None'),
+        (MEDIA_IMAGE, 'Image'),
+        (MEDIA_AUDIO, 'Audio'),
+        (MEDIA_VIDEO, 'Video')
+    ]
+
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     points = models.ForeignKey(Points, on_delete=models.CASCADE)
-    answer_text = models.CharField(max_length=200)
-    question_text = models.CharField(max_length=200)
+    answer_text = models.CharField(max_length=200, blank=True)
+    answer_media = models.FileField(upload_to="answer/", blank=True)
+    answer_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
+    question_text = models.CharField(max_length=200, blank=True)
+    question_media = models.FileField(upload_to="question/", blank=True)
+    question_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
 
     objects = AnswerQuestionManager()
 
