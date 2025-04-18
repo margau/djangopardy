@@ -56,7 +56,7 @@ def play(request, id):
     #        new_player.save()
     
     points = gameround.cardset.point_steps.all().order_by('points').values()
-    players = gameround.player_set.all().values()
+    players = gameround.player_set.all()
     categories = gameround.category.all().values()
     aq = []
     # build aq list
@@ -80,7 +80,7 @@ def play(request, id):
 def answer(request, gameround_id, answer_id, action = "none"):
     gameround = GameRound.objects.get(id=gameround_id)
     answer = AnswerQuestion.objects.get(id=answer_id)
-    players = gameround.player_set.all().values()
+    players = gameround.player_set.all()
     # note that we have asked this question
     asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
 
@@ -89,6 +89,9 @@ def answer(request, gameround_id, answer_id, action = "none"):
         pid = request.GET.get('player', None)
         player_wrong = Player.objects.get(id=pid)
         asked.player_wrong.add(player_wrong)
+        # reset player correct in case thats the same
+        if asked.player_correct == player_wrong:
+            asked.player_correct = None
 
     asked.save()
     template = loader.get_template('answer.html')
@@ -104,7 +107,7 @@ def answer(request, gameround_id, answer_id, action = "none"):
 def question(request, gameround_id, answer_id, action = "none"):
     gameround = GameRound.objects.get(id=gameround_id)
     answer = AnswerQuestion.objects.get(id=answer_id)
-    players = gameround.player_set.all().values()
+    players = gameround.player_set.all()
     # note that we have asked this question
     asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
     player_correct = None
@@ -117,7 +120,6 @@ def question(request, gameround_id, answer_id, action = "none"):
         asked.player_wrong.remove(player_correct)
     if action == "none":
         asked.player_correct = None
-
     asked.save()
     template = loader.get_template('question.html')
     context = {

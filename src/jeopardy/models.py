@@ -94,6 +94,19 @@ class Player(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def points(self):
+        p = 0
+        # first, get correct answers
+        correct = AnswerQuestionAsked.objects.filter(player_correct=self)
+        for c in correct:
+            p += c.answer_question.points.points
+        # then, subtract wrong answers
+        wrong = AnswerQuestionAsked.objects.filter(player_wrong=self)
+        for w in wrong:
+            p -= w.answer_question.points.points
+        return p
+
 # AnswerQuestionAsked ist eine Antwort, die in einer Runde gefragt wurde
 class AnswerQuestionAsked(models.Model):
     answer_question = models.ForeignKey(AnswerQuestion, on_delete=models.CASCADE)
