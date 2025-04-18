@@ -62,10 +62,10 @@ class AnswerQuestion(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     points = models.ForeignKey(Points, on_delete=models.CASCADE)
-    answer_text = models.CharField(max_length=200, blank=True)
+    answer_text = models.CharField(max_length=1000, blank=True)
     answer_media = models.FileField(upload_to="answer/", blank=True)
     answer_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
-    question_text = models.CharField(max_length=200, blank=True)
+    question_text = models.CharField(max_length=1000, blank=True)
     question_media = models.FileField(upload_to="question/", blank=True)
     question_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
 

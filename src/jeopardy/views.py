@@ -28,10 +28,10 @@ def cardset(request, id):
     answer_count = []
     # build aq list
     for c in categories:
-        c_answer_count = [c["name"]]
+        c_answer_count = []
         for p in points:
             c_answer_count.append(AnswerQuestion.objects.filter(category=c['id'], points=p['id']).count())
-        answer_count.append(c_answer_count)
+        answer_count.append([c["name"]]+c_answer_count+[min(c_answer_count)])
 
     template = loader.get_template('cardset.html')
     context = {

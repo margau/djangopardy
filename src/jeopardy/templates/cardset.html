@@ -30,12 +30,19 @@
         {% for x in points %}
         <th>{{ x.points }}</th>
         {% endfor %}
+        <th>Complete Decks</th>
       </thead>
       <tbody>
       {% for c in answer_count %}
       <tr>
         {% for x in c %}
-        <td>
+        {% if x == 0 %}
+        <td class="table-danger">
+        {% elif x == 1 %}
+        <td class="table-warning">
+        {% else %}
+        <td class="table-success">
+        {% endif %}
           {{ x }}
         </td>
         {% endfor %}
