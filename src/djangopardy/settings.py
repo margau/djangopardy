@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-d(w7barn=3bwq(_wa4cw6$=10&&tq-6ul@=ss(1g3%)swi-dto
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["djangopardy.margau.net"]
+
+
+CSRF_TRUSTED_ORIGINS = ["https://djangopardy.margau.net"]
 
 
 # Application definition
@@ -77,7 +80,7 @@ WSGI_APPLICATION = 'djangopardy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'files/db.sqlite3',
     }
 }
 

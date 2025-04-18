@@ -24,8 +24,5 @@ dynamic = ["version"]
 Issues = "https://github.com/margau/promtext-cli/issues"
 Source = "https://github.com/margau/promtext-cli"
 
-[project.scripts]
-webserver = "python src/manage.py runserver"
-
 [tool.hatch.version]
 source = "vcs"

@@ -1,0 +1,9 @@
+services:
+  djangopardy:
+    container_name: djangopardy
+#   image: djangopardy:latest
+    build: .
+    volumes: 
+    - ./files:/app/files
+    ports:
+    - "8040:8000"
