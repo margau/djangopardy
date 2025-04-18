@@ -60,9 +60,10 @@ def play(request, id):
     categories = gameround.category.all().values()
     aq = []
     # build aq list
-    for p in points:
+    for c in categories:
         caq = []
-        for c in categories:    
+        for p in points:   
+            # get all answer questions for this category 
             caq.append(AnswerQuestion.objects.get_best_aq(c['id'],p['id']))
         aq.append(caq)
             

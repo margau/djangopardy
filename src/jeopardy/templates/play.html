@@ -17,13 +17,19 @@
   </div>
   {% endfor %}
 </div>
-{% for x in aq %}
+
 <div class="row">
-  {% for y in x %}
-  <div class="col">
-    <a href="/play/{{ gameround.id }}/question/{{y.id}}"><button type="button" class="btn btn-primary">{{y.points}}</button></a>
+  {% for x in aq %}
+  
+  <div class="col d-grid gap-2">
+    {% for y in x %}
+    {% if y %}
+    <a href="/play/{{ gameround.id }}/question/{{y.id}}" class="btn btn-primary" role="button">{{y.points}}</a>
+    {% else %}
+    <button type="button" class="btn btn-lg btn-primary" disabled>Leider sind uns die Antworten ausgegangen!</button>
+    {% endif %}
+    {% endfor %}
   </div>
   {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}
