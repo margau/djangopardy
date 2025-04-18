@@ -77,19 +77,27 @@ def play(request, id):
     }
     return HttpResponse(template.render(context, request))
 
-def answer(request, gameround_id, answer_id):
+def answer(request, gameround_id, answer_id, action = "none"):
     gameround = GameRound.objects.get(id=gameround_id)
     answer = AnswerQuestion.objects.get(id=answer_id)
     players = gameround.player_set.all().values()
     # note that we have asked this question
     asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
 
+    player_wrong = None
+    if action == "wrong":
+        pid = request.GET.get('player', None)
+        player_wrong = Player.objects.get(id=pid)
+        asked.player_wrong.add(player_wrong)
+
+    asked.save()
     template = loader.get_template('answer.html')
     context = {
         'gameround': gameround,
         'answer': answer,
         'players': players,
         'asked': asked,
+        'player_wrong': player_wrong,
     }
     return HttpResponse(template.render(context, request))
 
@@ -105,6 +113,8 @@ def question(request, gameround_id, answer_id, action = "none"):
         pid = request.GET.get('player', None)
         player_correct = Player.objects.get(id=pid)
         asked.player_correct = player_correct
+        # wenns richtig ist, kann es nicht falsch sein
+        asked.player_wrong.remove(player_correct)
     if action == "none":
         asked.player_correct = None
 

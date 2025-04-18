@@ -14,9 +14,17 @@
     
   </div>
 </div>
+{% if player_wrong %}
+<div class="row mt-5">
+  <div class="col">
+    
+    <h4>Die Antwort von {{player_wrong}} war leider falsch!</h4>
+</div>
+</div>
+{% endif %}
 <div class="row mt-5">
 <div class="col d-grid gap-2">
-  <a href="/play/{{ gameround.id }}/answeraction/none/{{answer.id}}" class="btn btn-primary" role="button">Publikum</a>
+  <a href="/play/{{ gameround.id }}/answeraction/none/{{answer.id}}" class="btn btn-primary" role="button">Antwort Zeigen</a>
 </div>
 {% for p in players %}
 <div class="col d-grid gap-2">
@@ -25,6 +33,5 @@
   <a href="/play/{{ gameround.id }}/answeraction/wrong/{{answer.id}}?player={{p.id}}" class="btn btn-primary" role="button">Falsch</a>
 </div>
 {% endfor %}
-{{ asked.id }}
 </div>
 {% endblock %}
