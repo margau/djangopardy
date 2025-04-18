@@ -20,4 +20,30 @@
       </div>
 
 </form>
+<div class="row mt-5">
+  <div class="col">
+    <h3>AnswerQuestion Count</h3>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Categories</th>
+        {% for x in points %}
+        <th>{{ x.points }}</th>
+        {% endfor %}
+      </thead>
+      <tbody>
+      {% for c in answer_count %}
+      <tr>
+        {% for x in c %}
+        <td>
+          {{ x }}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

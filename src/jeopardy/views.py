@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import Cardset, GameRound, Player, AnswerQuestion, AnswerQuestionAsked
+from .models import Cardset, GameRound, Player, AnswerQuestion, AnswerQuestionAsked, Category
 
 # Create your views here.
 
@@ -21,11 +21,25 @@ def cardset(request, id):
         if name:
             new_round = GameRound(name=name, cardset=cardset)
             new_round.save()
-    gamerounds = GameRound.objects.filter(cardset_id=id).values()   
+    gamerounds = GameRound.objects.filter(cardset_id=id).values() 
+    # question list per cardset
+    points = cardset.point_steps.all().order_by('points').values()
+    categories = cardset.category_set.all().values()
+    answer_count = []
+    # build aq list
+    for c in categories:
+        c_answer_count = [c["name"]]
+        for p in points:
+            c_answer_count.append(AnswerQuestion.objects.filter(category=c['id'], points=p['id']).count())
+        answer_count.append(c_answer_count)
+
     template = loader.get_template('cardset.html')
     context = {
         'cardset': cardset,
         'gamerounds': gamerounds,
+        'points': points,
+        'categories': categories,
+        'answer_count': answer_count,
     }
     return HttpResponse(template.render(context, request))
 
