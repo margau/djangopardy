@@ -76,18 +76,18 @@ def play(request, id):
     # build aq list
     for c in categories:
         caq = [{"cat": c["name"]}]
-        for p in points:   
+        for p in points: 
+            aq_obj = {"aq": None, "asked": False, "player_correct":None}
             # first: was there already a question asked for that category, points and round - if yes, return this
-            # TODO
-            # get all answer questions for this category 
-            aq_tmp = AnswerQuestion.objects.get_best_aq(c['id'],p['id'])
-            aq_obj = {"aq": aq_tmp, "asked": False, "player_correct":None}
-            # check if this question was already asked in this round
-            if aq_tmp:
-                asked = aq_obj["aq"].answerquestionasked_set.filter(gameround=gameround).first()
-                if asked:
-                    aq_obj["asked"] = True
-                    aq_obj["player_correct"] = asked.player_correct
+            asked = AnswerQuestionAsked.objects.filter(gameround=gameround, answer_question__category=c['id'], answer_question__points=p['id']).first()
+            if asked:
+                # if we have an answer noted for this round, category and points, we can use this
+                aq_obj["aq"] = asked.answer_question
+                aq_obj["asked"] = True
+                aq_obj["player_correct"] = asked.player_correct
+            else:
+                # get best new question
+                aq_obj['aq']=AnswerQuestion.objects.get_best_aq(c['id'],p['id']) 
             caq.append(aq_obj)
         aq.append(caq)
 
