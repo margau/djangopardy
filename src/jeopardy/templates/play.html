@@ -23,7 +23,7 @@
 <div class="row">
   {% for x in categories %}
   <div class="col">
-    <h3>{{ x.name }}</h3>
+    
   </div>
   {% endfor %}
 </div>
@@ -33,7 +33,9 @@
   
   <div class="col d-grid gap-2">
     {% for y in x %}
-    {% if y.aq and y.asked == False %}
+    {% if y.cat %}
+    <h3>{{ y.cat }}</h3>
+    {% elif y.aq and y.asked == False %}
     <a href="/play/{{ gameround.id }}/answer/{{y.aq.id}}" class="btn btn-primary" role="button"><h3>{{y.aq.points}}</h3><br></a>
     {% elif y.aq and y.asked == True %}
     <a href="/play/{{ gameround.id }}/answer/{{y.aq.id}}" class="btn btn-dark" role="button"><h3>{{y.aq.points}}</h3><br>{{y.player_correct}}</a>

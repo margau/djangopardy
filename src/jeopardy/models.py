@@ -68,6 +68,7 @@ class AnswerQuestion(models.Model):
     question_text = models.CharField(max_length=1000, blank=True)
     question_media = models.FileField(upload_to="question/", blank=True)
     question_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
+    internal_notes = models.TextField(blank=True)
 
     objects = AnswerQuestionManager()
 
@@ -119,4 +120,7 @@ class AnswerQuestionAsked(models.Model):
     def __str__(self):
         return str(self.answer_question) + " - " + str(self.time_asked) + " - " + str(self.gameround)
 
+
+    class Meta:
+        unique_together = ('answer_question', 'gameround')
 

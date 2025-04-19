@@ -75,8 +75,10 @@ def play(request, id):
     aq = []
     # build aq list
     for c in categories:
-        caq = []
+        caq = [{"cat": c["name"]}]
         for p in points:   
+            # first: was there already a question asked for that category, points and round - if yes, return this
+            # TODO
             # get all answer questions for this category 
             aq_tmp = AnswerQuestion.objects.get_best_aq(c['id'],p['id'])
             aq_obj = {"aq": aq_tmp, "asked": False, "player_correct":None}
