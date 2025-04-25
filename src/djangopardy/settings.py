@@ -11,24 +11,41 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import configparser, os, logging
+
+logging.basicConfig(level=logging.INFO)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load Config from Configfile
+config = configparser.ConfigParser()
+
+conffile = os.environ.get('DJANGO_CONFIG_FILE', BASE_DIR.parent/Path("djangopardy.cfg"))
+logging.info(f"try to load config file {conffile}")
+
+config.read(conffile)
+
+if not len(config.sections()):
+    logging.fatal("config file missing or empty!")
+    exit(1)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d(w7barn=3bwq(_wa4cw6$=10&&tq-6ul@=ss(1g3%)swi-dto'
+SECRET_KEY = config.get("general", "secret_key")
+if len(SECRET_KEY) < 1:
+    logging.fatal("secret_key missing or empty!")
+    exit(1)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.getboolean("general", "debug", fallback=False)
+if DEBUG:
+    logging.warn("Debug mode active, not suitable for production!")
 
-ALLOWED_HOSTS = ["djangopardy.margau.net", "127.0.0.1"]
+ALLOWED_HOSTS = config.get("general", "allowed_hosts", fallback="127.0.0.1").split(",")
 
-
-CSRF_TRUSTED_ORIGINS = ["https://djangopardy.margau.net"]
+CSRF_TRUSTED_ORIGINS = config.get("general", "csrf_trusted_origins", fallback="").split(",")
 
 
 # Application definition

@@ -1,0 +1,5 @@
+[general]
+debug = True
+secret_key = 
+allowed_hosts = djangopardy.example.com,127.0.0.1
+csrf_trusted_origins = https://djangopardy.example.com
