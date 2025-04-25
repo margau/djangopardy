@@ -1,7 +1,7 @@
 services:
   djangopardy:
     container_name: djangopardy
-    image: djangopardy:latest
+    image: ghcr.io/margau/djangopardy:latest
     volumes: 
     - ./files:/app/files
     - ./djangopardy.cfg:/app/djangopardy.cfg
