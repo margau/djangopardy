@@ -31,9 +31,9 @@ jobs:
 
       # get version from hatch
       - name: Get version from hatch
-        id: version
+        id: get_version
         run: |
-          pipx run hatch version
+          pipx run hatch version >> $GITHUB_OUTPUT
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3.3.0
@@ -48,7 +48,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=pep440,pattern={{version}},value=${{ steps.version.outputs.stdout }}
+            type=pep440,pattern={{version}},value=${{ steps.get_version.outputs }}
   
       - name: Build and push Docker image
         id: push
