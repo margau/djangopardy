@@ -23,7 +23,7 @@ jobs:
       
       - name: Docker Metadata
         id: docker-metadata
-        uses: docker/metadata-action@v4
+        uses: https://github.com/docker/metadata-action@v4
         with:
           images: |
             ${{ env.REGISTRY }}/${{ github.repository }}
