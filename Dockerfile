@@ -1,31 +1,32 @@
 
 
-# Base image: Python 3.13 slim version for a minimal footprint
-FROM python:3.13-slim@sha256:9ed09f78253eb4f029f3d99e07c064f138a6f1394932c3807b3d0738a674d33b AS builder
+# Use a Python image with uv pre-installed
+FROM codeberg.org/margau/buildenv-uv:latest
 
-# Set working directory for all subsequent commands
+# Install the project into `/app`
 WORKDIR /app
 
-# Python environment variables:
-# Prevents Python from writing .pyc files to disk
-ENV PYTHONDONTWRITEBYTECODE=1
-# Ensures Python output is sent straight to terminal without buffering
-ENV PYTHONUNBUFFERED=1
+# Enable bytecode compilation
+ENV UV_COMPILE_BYTECODE=1
 
-# Install system dependencies:
-# libpq-dev: Required for psycopg2 (PostgreSQL adapter)
-# gcc: Required for compiling some Python packages
-RUN apt-get update \
-    && apt-get -y install libpq-dev gcc pipx git
+# Copy from the cache instead of linking since it's a mounted volume
+ENV UV_LINK_MODE=copy
 
-   # Copy the rest of application code to container
-COPY . .
+# Install the project's dependencies using the lockfile and settings
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-install-project --no-dev
 
-# create default environment
-RUN pipx run hatch dep show requirements > requirements.txt
-RUN pip install -r requirements.txt
+# Then, add the rest of the project source code and install it
+# Installing separately from its dependencies allows optimal layer caching
+COPY . /app
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked --no-dev
 
-# Document that the container listens on port 8000
+# Place executables in the environment at the front of the path
+ENV PATH="/app/.venv/bin:$PATH"
+
 EXPOSE 8000
 
 # Make the entrypoint script executable

@@ -1,0 +1,8 @@
+# Changes here will be overwritten by Copier.
+_commit: 0.0.20
+_src_path: https://codeberg.org/margau/copier-python-uv.git
+ignore_pylint: true
+ignore_ruff: true
+ignore_ruff_format: true
+project_description: A django-based jeopardy tool
+project_name: djangopardy
