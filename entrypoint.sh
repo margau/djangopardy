@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 python src/manage.py migrate --noinput
 python src/manage.py collectstatic --noinput
