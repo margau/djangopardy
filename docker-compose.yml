@@ -1,7 +1,7 @@
 services:
   djangopardy:
     container_name: djangopardy
-    image: ghcr.io/margau/djangopardy:latest@sha256:94f66a507f24ee732a8e7a42182acf57cfee05443176cdbd6185f0c111e4d106
+    image: codeberg.org/margau/djangopardy:latest
     volumes: 
     - ./files:/app/files
     - ./djangopardy.cfg:/app/djangopardy.cfg
