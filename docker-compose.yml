@@ -5,5 +5,19 @@ services:
     volumes: 
     - ./files:/app/files
     - ./djangopardy.cfg:/app/djangopardy.cfg
+    - ./db.sqlite3:/app/db.sqlite3
+    - static:/app/static
+  
+  nginx:
+    image: nginx:latest
     ports:
-    - "8040:8000"
+      - "8000:80"
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./files:/media:ro
+      - static:/static:ro
+    depends_on:
+      - djangopardy
+
+volumes:
+  static:

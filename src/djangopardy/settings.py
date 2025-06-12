@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'djangopardy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'files/db.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
