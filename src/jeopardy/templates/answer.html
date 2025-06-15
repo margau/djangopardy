@@ -17,6 +17,13 @@
     
   </div>
 </div>
+{% if answer.attribution %}
+<div class="row mt-5">
+  <div class="col">
+    <p><b>Quelle:</b> {{ answer.attribution }}</p>
+  </div>
+</div>
+{% endif %}
 {% if player_wrong %}
 <div class="row mt-5">
   <div class="col">

@@ -69,6 +69,7 @@ class AnswerQuestion(models.Model):
     question_media = models.FileField(upload_to="question/", blank=True)
     question_media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default=MEDIA_NONE)
     internal_notes = models.TextField(blank=True)
+    attribution = models.TextField(blank=True)
 
     objects = AnswerQuestionManager()
 

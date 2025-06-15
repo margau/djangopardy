@@ -13,6 +13,13 @@
     {% endif %}
   </div>
 </div>
+{% if answer.attribution %}
+<div class="row mt-5">
+  <div class="col">
+    <p><b>Quelle:</b> {{ answer.attribution }}</p>
+  </div>
+</div>
+{% endif %}
 <div class="row mt-5">
 <div class="col">
   {% if player_correct %}
