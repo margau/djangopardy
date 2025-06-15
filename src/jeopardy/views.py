@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import Cardset, GameRound, Player, AnswerQuestion, AnswerQuestionAsked, Category
+from django.db.models import Count
 
 # Create your views here.
 
@@ -26,12 +27,17 @@ def cardset(request, id):
     points = cardset.point_steps.all().order_by('points').values()
     categories = cardset.category_set.all().values()
     answer_count = []
-    # build aq list
+    # build aq list. This includes one row per category with the name, number of answers, and aggregation
     for c in categories:
         c_answer_count = []
+        unasked = []
         for p in points:
-            c_answer_count.append(AnswerQuestion.objects.filter(category=c['id'], points=p['id']).count())
-        answer_count.append([c["name"]]+c_answer_count+[min(c_answer_count)])
+            total_aqs = AnswerQuestion.objects.filter(category=c['id'], points=p['id']).count()
+            c_answer_count.append(total_aqs)
+            unasked_aqs = AnswerQuestion.objects.annotate(num_asked=Count('answerquestionasked')).filter(category=c['id'], points=p['id'], num_asked=0).count()
+            unasked.append(unasked_aqs)
+
+        answer_count.append([c["name"]]+c_answer_count+[min(c_answer_count), min(unasked)])
 
     template = loader.get_template('cardset.html')
     context = {
