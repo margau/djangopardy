@@ -34,7 +34,7 @@ def cardset(request, id):
         for p in points:
             total_aqs = AnswerQuestion.objects.filter(category=c['id'], points=p['id']).count()
             c_answer_count.append(total_aqs)
-            unasked_aqs = AnswerQuestion.objects.annotate(num_asked=Count('answerquestionasked')).filter(category=c['id'], points=p['id'], num_asked=0).count()
+            unasked_aqs = AnswerQuestion.objects.filter(category=c['id'], points=p['id'], num_asked=0).count()
             unasked.append(unasked_aqs)
 
         answer_count.append([c["name"]]+c_answer_count+[min(c_answer_count), min(unasked)])

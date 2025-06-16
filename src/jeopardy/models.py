@@ -26,9 +26,14 @@ class Category(models.Model):
 
 # Eine Antwort mit der dazugehörigen Frage
 class AnswerQuestionManager(models.Manager):
+    def get_queryset(self):
+        """Overrides the models.Manager method"""
+        qs = super(AnswerQuestionManager, self).get_queryset().annotate(num_asked=Count('answerquestionasked'))
+        return qs
+
     def get_best_aq(self, category, points):
         # first: get all AQs that were not answered ever in randomized order
-        aq = self.filter(category=category, points=points).annotate(num_asked=Count('answerquestionasked')).filter(num_asked=0).order_by('?').first()    
+        aq = self.filter(category=category, points=points).filter(num_asked=0).order_by('?').first()    
         if aq:
             return aq
         # if we have no answer, get the one with the oldest answer
@@ -75,8 +80,6 @@ class AnswerQuestion(models.Model):
 
     def __str__(self):
         return self.answer_text + " - " + str(self.category) + " - " + str(self.points)
-
-
 
 # Eine gespielte oder zu spielende Runde
 class GameRound(models.Model):
