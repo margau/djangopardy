@@ -12,8 +12,13 @@
       "enabled": false
     },
     {
-      "managers": ["docker-compose"],
-      "updateTypes": ["pin", "digest"],
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchUpdateTypes": [
+        "pin",
+        "digest"
+      ],
       "enabled": false
     }
   ],
