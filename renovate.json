@@ -10,6 +10,11 @@
         ".forgejo/workflows/lint.yaml"
       ],
       "enabled": false
+    },
+    {
+      "managers": ["docker-compose"],
+      "updateTypes": ["pin", "digest"],
+      "enabled": false
     }
   ],
   "docker-compose": {
