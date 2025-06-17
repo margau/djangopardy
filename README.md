@@ -65,7 +65,11 @@ In Jeopardy, "answers" are given, and "questions" are the "answers" of the game.
 - The scoreboard is computed by iterating over AnswerQuestionsAsked and adding the points to the players score
 - The next player to choose category & points is also computed by looking at AnswerQuestionsAsked (or using a random player if no one had the correct question)
 
+## Double Jeopardy/Daily Double
+You can manually set a probability for a daily double in the gameround configuration.
+If a daily double (computed on the fly by a random number) happens, the group that has chosen the category has to set a custom amount of points and needs to give the question for the answer.
+If wrong, the custom amount of points is substracted.
+
 ## Not supported yet
-- Double Jeopardy
 - Hardware (light/button) interaction
 

@@ -23,7 +23,10 @@
 <div class="row mt-5">
 <div class="col">
   {% if player_correct %}
-  <h4>{{player_correct}} bekommt <b>{{answer.points}}</b> Punkte</h4>
+  <h4>{{player_correct}} bekommt <b>{{points}}</b> Punkte</h4>
+  {% elif player_wrong %}
+  <h4>{{player_wrong}} lag falsch</h4>
+  <h1><b>-{{points}}</b> Punkte</h1>
   {% else %}
   <h4>Leider hatte kein Spieler die richtige Antwort!</h4>
   {% endif %}

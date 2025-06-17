@@ -2,9 +2,34 @@
 {% block site-title %}Spiel "{{ gameround.name }}"{% endblock %}
 
 {% block content %}
-<h4><b>{{answer.category}}</b> für <b>{{answer.points}}</b></h4>
+
+<h4><b>{{answer.category}}</b> für {% if double %}<s><b>{{answer.points}}</b></s>{% else %}<b>{{answer.points}}</b>{% endif %}</h4>
+{% if double and not double_points %}
 <div class="row">
   <div class="col">
+    <h2>Double für {{double_player}}</h2>
+    <h4>Wie viel Punkte willst du setzen? Min: {{double_points_min}}, Max: {{double_points_max}}</h4>
+    <form method="post" class="row justify-content-center">
+
+      {% csrf_token %}
+        <div class="col-auto">
+          <label for="inputName" class="">Punkte</label>
+          <input type="number" class="form-control" id="inputName" name="double_points" placeholder="" min="{{double_points_min}}" max="{{double_points_max}}" value="{{double_points_min}}">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3">Los gehts!</button>
+        </div>
+  
+  </form>
+  </div> 
+</div>
+{% else %}
+<div class="row">
+  <div class="col">
+    {% if double %}
+    <h5>Double für {{double_player}}</h5>
+    <h5><b>{{double_points}}</b> Punkte</h5>
+    {% endif %}
     <h4>Wie lautet die Frage zur folgenden Antwort:</h4>
     <h1>{{ answer.answer_text }}</h1>
     {% if answer.answer_media_type == "I" %}
@@ -33,6 +58,13 @@
 </div>
 {% endif %}
 <div class="row mt-5">
+{% if double %}
+<div class="col d-grid gap-2">
+  <h3>{{double_player.name}}</h3>
+  <a href="/play/{{ gameround.id }}/answeraction/correct/{{answer.id}}?player={{double_player.id}}" class="btn btn-primary" role="button">Richtig</a>
+  <a href="/play/{{ gameround.id }}/answeraction/wrongdouble/{{answer.id}}?player={{double_player.id}}" class="btn btn-primary" role="button">Falsch</a>
+</div>
+{% else %}
 <div class="col d-grid gap-2">
   <a href="/play/{{ gameround.id }}/answeraction/none/{{answer.id}}" class="btn btn-primary" role="button">Antwort Zeigen</a>
 </div>
@@ -43,5 +75,7 @@
   <a href="/play/{{ gameround.id }}/answeraction/wrong/{{answer.id}}?player={{p.id}}" class="btn btn-primary" role="button">Falsch</a>
 </div>
 {% endfor %}
+{% endif %}
+{% endif %}
 </div>
 {% endblock %}

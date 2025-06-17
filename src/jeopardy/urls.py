@@ -10,4 +10,5 @@ urlpatterns = [
     path('play/<int:gameround_id>/answeraction/none/<int:answer_id>', views.question, {"action": "none"}, name='answer-none'),
     path('play/<int:gameround_id>/answeraction/correct/<int:answer_id>', views.question, {"action": "correct"}, name='answer-correct'),
     path('play/<int:gameround_id>/answeraction/wrong/<int:answer_id>', views.answer, {"action": "wrong"}, name='answer-wrong'),
+    path('play/<int:gameround_id>/answeraction/wrongdouble/<int:answer_id>', views.question, {"action": "wrong"}, name='answer-wrong-double'),
 ]

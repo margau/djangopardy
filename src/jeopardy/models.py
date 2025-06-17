@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Count
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Punkteklasse
 class Points(models.Model):
@@ -81,12 +83,14 @@ class AnswerQuestion(models.Model):
     def __str__(self):
         return self.answer_text + " - " + str(self.category) + " - " + str(self.points)
 
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 # Eine gespielte oder zu spielende Runde
 class GameRound(models.Model):
     name = models.CharField(max_length=50)
     cardset = models.ForeignKey(Cardset, on_delete=models.CASCADE)
     start_time = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, related_name='categories')
+    double_frequency = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
 
     def __str__(self):
         return self.name + " - " + str(self.start_time)
@@ -105,11 +109,22 @@ class Player(models.Model):
         # first, get correct answers
         correct = AnswerQuestionAsked.objects.filter(player_correct=self)
         for c in correct:
-            p += c.answer_question.points.points
+            # check if this was a double
+            if c.double_player == self:
+                p += c.double_points
+            else:
+                # otherwise, just add the points
+                p += c.answer_question.points.points
         # then, subtract wrong answers
         wrong = AnswerQuestionAsked.objects.filter(player_wrong=self)
         for w in wrong:
-            p -= w.answer_question.points.points
+            # check if this was a double
+            if w.double_player == self:
+                # if it was a double, we have to subtract the double points
+                p -= w.double_points
+            else:
+                # otherwise, just subtract the points of the question
+                p -= w.answer_question.points.points
         return p
 
 # AnswerQuestionAsked ist eine Antwort, die in einer Runde gefragt wurde
@@ -120,6 +135,8 @@ class AnswerQuestionAsked(models.Model):
     gameround = models.ForeignKey(GameRound, on_delete=models.CASCADE)
     player_correct = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='right_answer', blank=True)
     player_wrong = models.ManyToManyField(Player, related_name='wrong_answers', blank=True)
+    double_player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, blank=True, related_name='double_player')
+    double_points = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.answer_question) + " - " + str(self.time_asked) + " - " + str(self.gameround)
