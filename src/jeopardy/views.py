@@ -201,8 +201,7 @@ def question(request, gameround_id, answer_id, action = "none"):
         player_wrong = Player.objects.get(id=pid)
         asked.player_wrong.add(player_wrong)
         # reset player correct in case thats the same
-        if asked.player_correct == player_wrong:
-            asked.player_correct = None    
+        asked.player_correct = None    
     if action == "none":
         asked.player_correct = None
     asked.save()
