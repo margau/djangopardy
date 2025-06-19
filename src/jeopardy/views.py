@@ -149,7 +149,7 @@ def answer(request, gameround_id, answer_id, action = "none"):
         if request.method == "POST":
             data = request.POST
             double_points = int(data.get("double_points"))
-            if double_points and double_points > double_points_min and double_points <= double_points_max:
+            if double_points and double_points >= double_points_min and double_points <= double_points_max:
                 asked.double_points = double_points
 
     player_wrong = None
