@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Cardset, GameRound, Player, AnswerQuestion, AnswerQuestionAsked, Category
 from django.db.models import Count
+import random
 
 # Create your views here.
 
@@ -130,7 +131,26 @@ def answer(request, gameround_id, answer_id, action = "none"):
     answer = AnswerQuestion.objects.get(id=answer_id)
     players = gameround.player_set.all()
     # note that we have asked this question
-    asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
+    asked, newly_asked = answer.answerquestionasked_set.get_or_create(gameround=gameround)
+
+    double = False
+    double_points_min = int(answer.points.points / 2)
+    double_points_max = int(answer.points.points * 2)
+    # if the question was newly asked, decide if we have a double
+    if newly_asked:
+        if gameround.double_frequency > 0:
+            if (random.random()*100) < gameround.double_frequency:
+                asked.double_player = Player.objects.get(id=request.GET.get('player', None))
+
+    # if we already have set a double player, it is of course still a double
+    if asked.double_player:
+        double = True
+        # check if we already have points for the double player?
+        if request.method == "POST":
+            data = request.POST
+            double_points = int(data.get("double_points"))
+            if double_points and double_points >= double_points_min and double_points <= double_points_max:
+                asked.double_points = double_points
 
     player_wrong = None
     if action == "wrong":
@@ -149,6 +169,11 @@ def answer(request, gameround_id, answer_id, action = "none"):
         'players': players,
         'asked': asked,
         'player_wrong': player_wrong,
+        'double': double,
+        'double_player': asked.double_player,
+        'double_points': asked.double_points,
+        'double_points_min': double_points_min,
+        'double_points_max': double_points_max,
     }
     return HttpResponse(template.render(context, request))
 
@@ -159,6 +184,11 @@ def question(request, gameround_id, answer_id, action = "none"):
     # note that we have asked this question
     asked, _ = answer.answerquestionasked_set.get_or_create(gameround=gameround)
     player_correct = None
+    player_wrong = None
+    points = answer.points
+    # wenn es ein double war, punkte überschreiben
+    if asked.double_player:
+        points = asked.double_points if asked.double_points else points.points
     # wenn es richtig war, punkte draufrechnen
     if action == "correct":
         pid = request.GET.get('player', None)
@@ -166,6 +196,12 @@ def question(request, gameround_id, answer_id, action = "none"):
         asked.player_correct = player_correct
         # wenns richtig ist, kann es nicht falsch sein
         asked.player_wrong.remove(player_correct)
+    if action == "wrong":
+        pid = request.GET.get('player', None)
+        player_wrong = Player.objects.get(id=pid)
+        asked.player_wrong.add(player_wrong)
+        # reset player correct in case thats the same
+        asked.player_correct = None    
     if action == "none":
         asked.player_correct = None
     asked.save()
@@ -176,5 +212,7 @@ def question(request, gameround_id, answer_id, action = "none"):
         'players': players,
         'asked': asked,
         'player_correct': player_correct,
+        'player_wrong': player_wrong,
+        'points': points,
     }
     return HttpResponse(template.render(context, request))
