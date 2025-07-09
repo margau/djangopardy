@@ -1,4 +1,4 @@
-name: lint
+name: publish
 
 on:
   push:
@@ -16,5 +16,3 @@ jobs:
           fetch-depth: 0
       - name: Build the project
         run: uv build
-        
-        
