@@ -12,7 +12,7 @@ jobs:
     
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:ac24d9c218071accc910d79aedae97e3044e2015d3097096e69645ad4d8561f6
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:91fd53bbe510dfed9cf87507bb33c8a04060e5090556c27b16ba151d219ec37f
 
 
     steps:
