@@ -27,16 +27,7 @@
       "matchManagers": [
         "docker-compose"
       ],
-      "matchUpdateTypes": [
-        "pin",
-        "digest"
-      ],
-      "enabled": false
+      "pinDigests": false
     }
-  ],
-  "docker-compose": {
-    "digest": {
-      "enabled": false
-    }
-  }
+  ]
 }
