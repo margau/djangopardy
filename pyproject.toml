@@ -22,13 +22,9 @@ source = "vcs"
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
-<<<<<<< before updating
-# TODO: URLs
-=======
 # Scripts
 [project.scripts]
 pkg-exporter = 'pkg_exporter.textfile:main'
->>>>>>> after updating
 
 # Dev Dependencies
 [tool.uv]
