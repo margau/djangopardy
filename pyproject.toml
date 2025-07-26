@@ -23,10 +23,13 @@ source = "vcs"
 local_scheme = "no-local-version"
 
 
+[project.urls]
+Documentation = "https://codeberg.org/margau/djangopardy/src/branch/main#readme"
+Issues = "https://codeberg.org/margau/djangopardy/issues"
+Source = "https://codeberg.org/margau/djangopardy.git"
 
-# Scripts
-[project.scripts]
-pkg-exporter = 'pkg_exporter.textfile:main'
+# no scripts defined
+
 
 # Dev Dependencies
 [tool.uv]
