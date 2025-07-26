@@ -9,3 +9,5 @@ project_description: A django-based jeopardy tool
 project_name: djangopardy
 pypi_publish: false
 pypi_publish_dev: false
+
+#copier updated
