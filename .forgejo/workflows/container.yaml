@@ -1,0 +1,61 @@
+name: Build and Push Container Image
+
+on:
+  push:
+
+env:
+  REGISTRY: codeberg.org
+
+jobs:
+  build-and-push-image:
+    runs-on: docker-builder
+    container: 
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:7ef6e281b4a72c0a8926a5ba64954da1ae73d13d5d0d1939aa1581e4a3ec0437
+    steps:
+    - uses: https://code.forgejo.org/actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      with:
+        fetch-depth: 0
+    - name: cache restore
+      uses: https://code.forgejo.org/actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+      with:
+        path: |
+          /var/lib/containers
+        key: buildah-images
+
+    - name: Docker Metadata
+      id: docker-metadata
+      uses: https://github.com/docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
+      with:
+        images: |
+          ${{ env.REGISTRY }}/${{ github.repository }}
+        tags: |
+          type=sha,enable=${{ !(github.ref == format('refs/heads/{0}', 'main') || startsWith(github.ref, 'refs/tags/')) }}
+          type=pep440,pattern={{version}}
+          type=raw,value=main,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+
+    - name: Build
+      id: build-image
+      uses: https://github.com/redhat-actions/buildah-build@main
+      with:
+        containerfiles: |
+          ./Containerfile
+        tags: ${{ steps.docker-metadata.outputs.tags }}
+        labels: ${{ steps.docker-metadata.outputs.labels }}
+        platforms: linux/amd64,linux/arm64
+        layers: true
+    
+    - name: Push
+      if: github.ref == format('refs/heads/{0}', 'main') || startsWith(github.ref, 'refs/tags/') # only push on main branch or tags
+      uses: https://github.com/redhat-actions/push-to-registry@main
+      with:
+        image: ${{ steps.build-image.outputs.image }}
+        tags: ${{ steps.build-image.outputs.tags }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.CONTAINER_TOKEN }}
+
+    - name: cache save
+      uses: https://code.forgejo.org/actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+      with:
+        path: |
+          /var/lib/containers
+        key: buildah-images

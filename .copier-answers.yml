@@ -1,7 +1,7 @@
 # Changes here will be overwritten by Copier.
-_commit: 0.0.78
+_commit: 0.0.79
 _src_path: https://codeberg.org/margau/copier-python-uv.git
-container: false
+container: true
 forgejo_url: https://codeberg.org/margau/djangopardy
 ignore_pylint: true
 ignore_ruff: true
