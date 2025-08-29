@@ -11,3 +11,5 @@ project_name: djangopardy
 pypi_publish: false
 pypi_publish_dev: false
 scripts: null
+
+#copier updated
