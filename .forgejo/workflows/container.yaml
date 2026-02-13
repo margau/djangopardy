@@ -10,13 +10,13 @@ jobs:
   build-and-push-image:
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:7ef6e281b4a72c0a8926a5ba64954da1ae73d13d5d0d1939aa1581e4a3ec0437
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:7199e99a0f74a531f966f9c1379a129b20f1a8b4e708073fce45c35c038586aa
     steps:
-    - uses: https://code.forgejo.org/actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+    - uses: https://code.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       with:
         fetch-depth: 0
     - name: cache restore
-      uses: https://code.forgejo.org/actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+      uses: https://code.forgejo.org/actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
       with:
         path: |
           /var/lib/containers
@@ -24,7 +24,7 @@ jobs:
 
     - name: Docker Metadata
       id: docker-metadata
-      uses: https://github.com/docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
+      uses: https://github.com/docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
       with:
         images: |
           ${{ env.REGISTRY }}/${{ github.repository }}
@@ -54,7 +54,7 @@ jobs:
         password: ${{ secrets.CONTAINER_TOKEN }}
 
     - name: cache save
-      uses: https://code.forgejo.org/actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+      uses: https://code.forgejo.org/actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
       with:
         path: |
           /var/lib/containers
