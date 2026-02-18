@@ -31,9 +31,6 @@
       "matchManagers": [
         "docker-compose"
       ],
-<<<<<<< before updating
-      "pinDigests": false
-=======
       "matchUpdateTypes": [
         "pin",
         "digest"
@@ -54,7 +51,6 @@
         "patch"
       ],
       "automerge": true
->>>>>>> after updating
     }
   ]
 }
