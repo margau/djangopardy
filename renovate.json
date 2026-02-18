@@ -31,7 +31,30 @@
       "matchManagers": [
         "docker-compose"
       ],
+<<<<<<< before updating
       "pinDigests": false
+=======
+      "matchUpdateTypes": [
+        "pin",
+        "digest"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "copier"
+      ],
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": [
+        "copier"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
+>>>>>>> after updating
     }
   ]
 }
