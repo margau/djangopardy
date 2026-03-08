@@ -9,7 +9,7 @@ services:
     - static:/app/static
   
   nginx:
-    image: nginx:latest
+    image: nginx:latest@sha256:0236ee02dcbce00b9bd83e0f5fbc51069e7e1161bd59d99885b3ae1734f3392e
     ports:
       - "8000:80"
     volumes:
