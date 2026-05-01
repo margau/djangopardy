@@ -10,13 +10,13 @@ jobs:
   build-and-push-image:
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:4ce8829f76749bf993f52b67b4e417bd1f3ac774d7dc5856241e05562b0e1eb3
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:5f177bed8dea087df92ae988e7988b639d421b21855bc2b009888de160508a97
     steps:
     - uses: https://code.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       with:
         fetch-depth: 0
     - name: cache restore
-      uses: https://code.forgejo.org/actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+      uses: https://code.forgejo.org/actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: |
           /var/lib/containers
@@ -35,7 +35,7 @@ jobs:
 
     - name: Build
       id: build-image
-      uses: https://github.com/redhat-actions/buildah-build@bf23fc1874ba2dd032cee27d748fb0b7257b25a0 # main
+      uses: https://github.com/redhat-actions/buildah-build@061ffd31bb5c3f8733a6f9bbdf00a9fb02eb708c # main
       with:
         containerfiles: |
           ./Containerfile
@@ -54,7 +54,7 @@ jobs:
         password: ${{ secrets.CONTAINER_TOKEN }}
 
     - name: cache save
-      uses: https://code.forgejo.org/actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+      uses: https://code.forgejo.org/actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: |
           /var/lib/containers
