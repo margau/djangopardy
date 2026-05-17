@@ -11,7 +11,7 @@ jobs:
   pytest:
     runs-on: docker
     container:
-      image: codeberg.org/margau/buildenv-uv:latest@sha256:aaaf8bd9bfbe276136de485eb397aad9dc569b0ae76473b12f16b0205fcf4be0
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:4625e27c770668e96a4efbb72980b45d4f7ec2ae879d03c5e0af2c977bb6b75b
 
     steps:
       - uses: https://code.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
