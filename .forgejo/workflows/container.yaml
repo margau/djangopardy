@@ -10,7 +10,7 @@ jobs:
   build-and-push-image:
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:9a69db8cb96b89af4306e4438a8f17f2dd1fb1a025419a5a1de87848f9361d0a
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:98312f67f25ee6c1f03262eff22e6eb6093a70baf2912d88aa8315137f9e0d42
     steps:
     - uses: https://code.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       with:
