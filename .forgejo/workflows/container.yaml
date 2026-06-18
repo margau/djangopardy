@@ -10,9 +10,9 @@ jobs:
   build-and-push-image:
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:98312f67f25ee6c1f03262eff22e6eb6093a70baf2912d88aa8315137f9e0d42
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:d0bdc457e0d9f09528f5b9db357cf471ee4e271aa4f55cee876576939a9d4d70
     steps:
-    - uses: https://code.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - uses: https://code.forgejo.org/actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       with:
         fetch-depth: 0
     - name: cache restore
