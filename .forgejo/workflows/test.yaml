@@ -13,10 +13,10 @@ jobs:
     env:
       UV_CACHE_DIR: /tmp/.uv-cache
     container:
-      image: codeberg.org/margau/buildenv-uv:latest@sha256:41a740b95c815bda4cc70fe9325a4c6e3c00e65f1a3ec9b979468e6202391dce
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:a2559f0d865dbc7d13e82990f6147bd2124129b6e6f3b4d281579834f6ab0a64
 
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: https://code.forgejo.org/actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 0
       - name: cache restore
