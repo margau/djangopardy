@@ -163,14 +163,14 @@ wheels = [
 
 [[package]]
 name = "django-bootstrap5"
-version = "25.2"
+version = "26.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/40/97/7c905896f8014978e982f5cfe3c3a56131cf5042d8983f33b98b196ef119/django_bootstrap5-25.2.tar.gz", hash = "sha256:abcfcd543efc19aaab4456a12b566507f684cfda98effc5dd3ad5167ba05c7b3", size = 129765, upload-time = "2025-07-30T12:33:30.216Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f8/31/bd9e6acdf959d5e19757026c206a6bdfceec3001ee85bb1f9799ce304f87/django_bootstrap5-26.2.tar.gz", hash = "sha256:12331059c8230ba372ffaad990a706151e1ad8f721a870aa2e862cf6746f0d33", size = 51468, upload-time = "2026-02-08T11:47:19.067Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/e4/becdbbb273a4176029df49999d78169600000747ed7b5118dab13fe49d99/django_bootstrap5-25.2-py3-none-any.whl", hash = "sha256:9418969fa5932729dc1addb1b70f13c9312a522b15033219ac3cbc5728eb8937", size = 26740, upload-time = "2025-07-30T12:33:28.581Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/79/d4b547849a86f450b1f1fb77f306da5d7844aba45f4aa10450d375fc26f5/django_bootstrap5-26.2-py3-none-any.whl", hash = "sha256:179af37c59f4e9b1070fc650f30961c5d903c2c0ad60280ad5b63ed394f68658", size = 26851, upload-time = "2026-02-08T11:47:20.198Z" },
 ]
 
 [[package]]
@@ -193,7 +193,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = "==5.2.3" },
-    { name = "django-bootstrap5", specifier = "==25.2" },
+    { name = "django-bootstrap5", specifier = "==26.2" },
     { name = "gunicorn", specifier = "==26.0.0" },
 ]
 
