@@ -1,7 +1,7 @@
 
 
 # Use a Python image with uv pre-installed
-FROM codeberg.org/margau/buildenv-uv:latest@sha256:1ba17dd192f0c7516fcd15f75f1de72bcbfac36cf5518f71b8043e72db268040
+FROM codeberg.org/margau/buildenv-uv:latest@sha256:04394620313c572b804ec642d88280c61c0c461d5ea5f1cfa37a3a0ba7589247
 
 # Install the project into `/app`
 WORKDIR /app

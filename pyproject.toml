@@ -32,7 +32,7 @@ Source = "https://codeberg.org/margau/djangopardy.git"
 
 [dependency-groups]
 dev = [
-  "ruff==0.16.2",
+  "ruff==0.16.4",
   "pylint==4.0.7",
   "pytest==9.1.1",
   "coverage==7.15.4",
