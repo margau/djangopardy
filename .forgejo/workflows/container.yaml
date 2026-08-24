@@ -35,7 +35,7 @@ jobs:
 
     - name: Build
       id: build-image
-      uses: https://github.com/redhat-actions/buildah-build@c315bd80754ede981a1cc65ed81c6b23f0147642 # main
+      uses: https://github.com/redhat-actions/buildah-build@719e3c40d8af9790c23eca13f7daa339f2867034 # main
       with:
         containerfiles: |
           ./Containerfile
@@ -46,7 +46,7 @@ jobs:
     
     - name: Push
       if: github.ref == format('refs/heads/{0}', 'main') || startsWith(github.ref, 'refs/tags/') # only push on main branch or tags
-      uses: https://github.com/redhat-actions/push-to-registry@07a25a838dfb44be10237770e52d36f213832009 # main
+      uses: https://github.com/redhat-actions/push-to-registry@4c77ab7a581ffdb3beb3eae58b6fc6264c85305a # main
       with:
         image: ${{ steps.build-image.outputs.image }}
         tags: ${{ steps.build-image.outputs.tags }}
