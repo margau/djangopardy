@@ -10,7 +10,7 @@ jobs:
   build-and-push-image:
     runs-on: docker-builder
     container: 
-      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:c74b5c5d40e58a947b3f80bb5a8d3f520c24788e137235befa37da1845125d98
+      image: codeberg.org/margau/buildenv-container-builder:latest@sha256:20bd8b7132c7afc663a905caf5e5fd53fb0bf4705145cfbb5117da5b0916499d
     steps:
     - uses: https://code.forgejo.org/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
@@ -35,7 +35,7 @@ jobs:
 
     - name: Build
       id: build-image
-      uses: https://github.com/redhat-actions/buildah-build@719e3c40d8af9790c23eca13f7daa339f2867034 # main
+      uses: https://github.com/redhat-actions/buildah-build@adf46c486ef4a3c9e7047319c8f3acf989266c42 # main
       with:
         containerfiles: |
           ./Containerfile
@@ -46,7 +46,7 @@ jobs:
     
     - name: Push
       if: github.ref == format('refs/heads/{0}', 'main') || startsWith(github.ref, 'refs/tags/') # only push on main branch or tags
-      uses: https://github.com/redhat-actions/push-to-registry@4c77ab7a581ffdb3beb3eae58b6fc6264c85305a # main
+      uses: https://github.com/redhat-actions/push-to-registry@e459a35fac8e05b48ddca852748c7eeca8648c6b # main
       with:
         image: ${{ steps.build-image.outputs.image }}
         tags: ${{ steps.build-image.outputs.tags }}
