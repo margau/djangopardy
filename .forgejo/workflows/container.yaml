@@ -35,7 +35,7 @@ jobs:
 
     - name: Build
       id: build-image
-      uses: https://github.com/redhat-actions/buildah-build@ed0eeb94a2e22331e0afff2f9c4ece2496fcc532 # main
+      uses: https://github.com/redhat-actions/buildah-build@1106f2b79064195dbd95fe62af06c8aa20614013 # main
       with:
         containerfiles: |
           ./Containerfile
